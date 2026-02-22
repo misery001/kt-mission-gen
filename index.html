@@ -245,7 +245,17 @@
             setTimeout(() => scrambleText('critop-val', `OPERATION ${selectedCritOp}`), 300);
         }
     </script>
+<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Cogitator Offline Protocols Engaged', reg))
+                    .catch((err) => console.log('Offline Protocols Failed', err));
+            });
+        }
+    </script>
 </body>
 </html>
+
 
 
