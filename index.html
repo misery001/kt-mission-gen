@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactical Cogitator // Damaged</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --term-green: #33ff33;
+            --term-glow: 0 0 8px rgba(51, 255, 51, 0.6);
+            --bg-color: #030503;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--term-green);
+            font-family: 'VT323', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: screenFlicker 6s infinite;
+        }
+
+        /* Dark, dirty vignette around the edges */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Heavy CRT Scanlines */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 4;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            background-color: #0a110a;
+            padding: 2rem;
+            border: 2px solid #1a4d1a;
+            box-shadow: inset 0 0 20px #000, var(--term-glow);
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .header {
+            border-bottom: 2px dashed #1a4d1a;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        h1 { 
+            margin: 0;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            text-shadow: 2px 0px 1px rgba(255,0,0,0.4), -2px 0px 1px rgba(0,0,255,0.4), var(--term-glow); 
+            letter-spacing: 2px;
+        }
+
+        .sub-header {
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        .glitch-text {
+            animation: textGlitch 3s infinite;
+        }
+
+        button {
+            background-color: transparent;
+            color: var(--term-green);
+            border: 1px solid var(--term-green);
+            padding: 15px 20px;
+            font-family: 'VT323', monospace;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 30px;
+            transition: all 0.1s;
+            text-shadow: var(--term-glow);
+            box-shadow: inset 0 0 10px rgba(51, 255, 51, 0.1);
+        }
+
+        button:hover { 
+            background-color: rgba(51, 255, 51, 0.2); 
+            box-shadow: var(--term-glow);
+        }
+        
+        button:active { transform: translateY(2px); }
+
+        .result-group { 
+            margin: 20px 0; 
+            text-align: left;
+            background: rgba(51, 255, 51, 0.02);
+            padding: 10px;
+            border-left: 3px solid #1a4d1a;
+        }
+
+        .label { 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            opacity: 0.5;
+        }
+
+        .value { 
+            font-size: 2rem; 
+            text-shadow: var(--term-glow);
+            min-height: 40px;
+            margin-top: 5px;
+            color: #b3ffb3; 
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--term-green);
+            animation: blink 1s step-end infinite;
+        }
+
+        /* ANIMATIONS */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes screenFlicker {
+            0% { opacity: 0.95; }
+            4% { opacity: 0.8; }
+            8% { opacity: 0.95; }
+            40% { opacity: 0.95; }
+            41% { opacity: 0.6; text-shadow: none; } 
+            42% { opacity: 0.95; }
+            80% { opacity: 0.95; }
+            81% { opacity: 0.7; }
+            83% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+
+        @keyframes textGlitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 1px) }
+            21% { transform: translate(0) }
+            60% { transform: translate(0) }
+            61% { transform: translate(2px, -1px) }
+            62% { transform: translate(0) }
+            100% { transform: translate(0) }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header glitch-text">
+            <h1>+++ ASTRA MILITARUM +++</h1>
+            <div class="sub-header">SYS_ERR: COGITATOR DAMAGED</div>
+        </div>
+        
+        <button onclick="generateMission()">> FORCE_EXECUTE <span class="cursor"></span></button>
+        
+        <div class="result-group">
+            <div class="label">TARGET ZONE:</div>
+            <div class="value" id="terrain-val">[ OFFLINE ]</div>
+        </div>
+        <div class="result-group">
+            <div class="label">TOPOGRAPHY:</div>
+            <div class="value" id="map-val">[ OFFLINE ]</div>
+        </div>
+        <div class="result-group">
+            <div class="label">CRITICAL OPERATION:</div>
+            <div class="value" id="critop-val">[ OFFLINE ]</div>
+        </div>
+    </div>
+
+    <script>
+        const terrainLayouts = {
+            "Squad-Games Vulkus Map Pack 2.0": Array.from({length: 12}, (_, i) => `Map${i + 1}`),
+            "Squad-Games Gallowdark": Array.from({length: 13}, (_, i) => `Map${i + 1}`)
+        };
+        
+        const critOps = ["01", "02", "03", "04", "05", "07", "08"];
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function scrambleText(elementId, finalText) {
+            const chars = '!<>-_\\\\/[]{}—=+*^?#01X';
+            const element = document.getElementById(elementId);
+            let iterations = 0;
+            
+            const interval = setInterval(() => {
+                element.innerText = "> " + finalText.split('').map((letter, index) => {
+                    if(index < iterations) {
+                        return finalText[index];
+                    }
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                
+                if(iterations >= finalText.length) {
+                    clearInterval(interval);
+                }
+                
+                iterations += 1/2; 
+            }, 30); 
+        }
+
+        function generateMission() {
+            const terrainKeys = Object.keys(terrainLayouts);
+            const selectedTerrain = getRandomItem(terrainKeys);
+            const selectedMap = getRandomItem(terrainLayouts[selectedTerrain]);
+            const selectedCritOp = getRandomItem(critOps);
+
+            scrambleText('terrain-val', selectedTerrain);
+            setTimeout(() => scrambleText('map-val', selectedMap), 150);
+            setTimeout(() => scrambleText('critop-val', `OPERATION ${selectedCritOp}`), 300);
+        }
+    </script>
+</body>
+</html>
