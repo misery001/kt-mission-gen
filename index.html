@@ -199,6 +199,14 @@
             <div class="label">CRITICAL OPERATION:</div>
             <div class="value" id="critop-val">[ OFFLINE ]</div>
         </div>
+        <div class="result-group">
+            <div class="label">CRITICAL OPERATION:</div>
+            <div class="value" id="critop-val">[ OFFLINE ]</div>
+        </div>
+            <div class="result-group" id="map-image-container" style="display: none; text-align: center; border-left: none; background: transparent;">
+            <div class="label" style="text-align: left; border-left: 3px solid #1a4d1a; padding-left: 10px;">TACTICAL DISPLAY:</div>
+            <img id="map-image" src="" alt="Map Layout" style="max-width: 100%; border: 2px solid #1a4d1a; border-radius: 5px; margin-top: 15px; box-shadow: 0 0 15px rgba(51, 255, 51, 0.15); opacity: 0.85;">
+        </div>
     </div>
 
     <script>
@@ -240,9 +248,27 @@
             const selectedMap = getRandomItem(terrainLayouts[selectedTerrain]);
             const selectedCritOp = getRandomItem(critOps);
 
+            // Hide the image while calculating new coordinates
+            document.getElementById('map-image-container').style.display = 'none';
+
             scrambleText('terrain-val', selectedTerrain);
             setTimeout(() => scrambleText('map-val', selectedMap), 150);
             setTimeout(() => scrambleText('critop-val', `OPERATION ${selectedCritOp}`), 300);
+
+            // Load and display the map image
+            setTimeout(() => {
+                const imgContainer = document.getElementById('map-image-container');
+                const imgElement = document.getElementById('map-image');
+                
+                // Figure out if it's vulkus or gallowdark
+                let prefix = selectedTerrain.includes("Vulkus") ? "vulkus" : "gallowdark";
+                // Strip the word "Map" to just get the number (e.g., "10")
+                let mapNum = selectedMap.replace("Map", ""); 
+                
+                // Point to the image in your maps folder
+                imgElement.src = `maps/${prefix}_${mapNum}.jpg`;
+                imgContainer.style.display = "block";
+            }, 800); // 800ms delay to wait for the text to finish scrambling
         }
     </script>
 <script>
@@ -256,6 +282,7 @@
     </script>
 </body>
 </html>
+
 
 
 
