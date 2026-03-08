@@ -84,9 +84,16 @@
             letter-spacing: 2px;
         }
 
-        .sub-header {
+       .error-text {
             font-size: 1.2rem;
-            opacity: 0.6;
+            color: #ff3333;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.8);
+            animation: alarmBlink 1.2s step-end infinite;
+        }
+
+        @keyframes alarmBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .glitch-text {
@@ -290,6 +297,7 @@
     </script>
 </body>
 </html>
+
 
 
 
