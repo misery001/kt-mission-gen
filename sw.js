@@ -3,7 +3,7 @@ const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './icon.jpg',
+  './icon.png',
   
   // Vulkus Maps
   './maps/vulkus_1.jpg',
