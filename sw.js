@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kt-cogitator-v9';
+const CACHE_NAME = 'kt-cogitator-v10';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
