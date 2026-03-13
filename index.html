@@ -235,10 +235,23 @@
         .credits {
             margin-top: 35px;
             font-size: 1rem;
-            color: #55aa55; /* A slightly dimmer terminal green */
+            color: #55aa55; 
             opacity: 0.7;
             text-shadow: none;
             letter-spacing: 1px;
+        }
+
+        .credits a {
+            color: var(--term-green);
+            text-decoration: none;
+            border-bottom: 1px dotted #55aa55;
+            transition: all 0.2s ease;
+        }
+
+        .credits a:hover, .credits a:active {
+            color: #fff;
+            border-bottom: 1px solid #fff;
+            text-shadow: var(--term-glow);
         }
     </style>
 </head>
@@ -272,7 +285,7 @@
         </div>
         
         <div class="credits">
-            Maps designed by Squad-Games – www.squad-games.net
+            Maps designed by Squad-Games – <a href="https://www.squad-games.net" target="_blank" rel="noopener noreferrer">www.squad-games.net</a>
         </div>
         
         <div id="image-modal" onclick="closeModal()" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 5, 3, 0.95); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; cursor: pointer;">
